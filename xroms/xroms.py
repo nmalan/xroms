@@ -74,7 +74,7 @@ def roms_dataset(roms_file: str) -> xr.Dataset:
         if "Vtransform" not in A0:
             Vtransform = 1
         else:
-            Vtransform = int(A0.Vtransform)
+            Vtransform = int(A0.Vtransform[0])
         # Should handle different ways to get  vertical structure
         # if not present in the file
 
