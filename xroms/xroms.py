@@ -25,7 +25,7 @@ def roms_dataset(roms_file: str) -> xr.Dataset:
     data_vars = ["zeta", "u", "v", "temp", "salt"]
 
     # Read the ROMS file
-    A0 = xr.open_dataset(roms_file)
+    A0 = xr.open_mfdataset(roms_file, chunks={'ocean_time': 100}, combine='by_coords', decode_coords=True)
     # Old ROMS output have dimension 'time' instead of 'ocean_time'
     if "time" in A0.dims:
         A0 = A0.rename({"time": "ocean_time"})
