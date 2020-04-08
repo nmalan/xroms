@@ -25,7 +25,7 @@ def roms_dataset(roms_file: str) -> xr.Dataset:
     data_vars = ["zeta", "u", "v", "temp", "salt"]
 
     # Read the ROMS file
-    A0 = xr.open_mfdataset(roms_file, chunks={'ocean_time': 100}, combine='by_coords', decode_coords=True)
+    A0 = xr.open_dataset(roms_file)
     # Old ROMS output have dimension 'time' instead of 'ocean_time'
     if "time" in A0.dims:
         A0 = A0.rename({"time": "ocean_time"})
@@ -74,7 +74,7 @@ def roms_dataset(roms_file: str) -> xr.Dataset:
         if "Vtransform" not in A0:
             Vtransform = 1
         else:
-            Vtransform = int(A0.Vtransform[0])
+            Vtransform = int(A0.Vtransform)
         # Should handle different ways to get  vertical structure
         # if not present in the file
 
